@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "dSKjlkqjbSipD8OKcl1Lvw2yqe91vHCc28Ou5PrFeIgu8zIzps0qJOM07GH9rus9/1F4/T9jpnT23/KQE0I33A==",
+  "success": true,
+  "projectFilePath": "/Users/pkg/Desktop/DSOP/Project1/distributed-actor-mining/distributed-actor-mining.fsproj",
+  "expectedPackageFiles": [
+    "/Users/pkg/.nuget/packages/fsharp.core/5.0.0/fsharp.core.5.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
