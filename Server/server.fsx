@@ -40,6 +40,13 @@ let config =
 // Creating an Actor System
 let system = System.create "coins" config
 
+// Discriminated Union for needed Data Structs
+type DataInfo =
+    | Input of (Int32)
+    | Final of (string * string)
+    | Done of (string)
+
+
 // Some Initialization
 let zeroInByte : byte = byte 0
 let charSet = Array.concat([[|'a' .. 'z'|];[|'A' .. 'Z'|];[|'0' .. '9'|]])
@@ -54,3 +61,14 @@ let HashByteArray (str : string) : byte[] =
 //  Convert SHA256 Byte array to string form
 let HashByteToString (hash_bytes : byte[]) : string = 
     BitConverter.ToString(hash_bytes).Replace("-","")
+
+
+// Supervising Options
+let options = [SpawnOption.SupervisorStrategy(Strategy.OneForOne (fun e -> Directive.Restart))]
+// Supervisior Strategy
+let strategy = 
+    Strategy.OneForOne (fun e ->
+        match e with
+        | :? DivideByZeroException -> Directive.Resume
+        | :? ArgumentException -> Directive.Stop
+        | _ -> Directive.Escalate)
