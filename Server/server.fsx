@@ -46,6 +46,7 @@ let config =
 // Creating an Actor System
 let system = System.create "coins" config
 
+
 // Discriminated Union for needed Data Structs
 type DataInfo =
     | Input of (Int32)
@@ -102,8 +103,84 @@ let printActor (mailbox : Actor<_>) =
 let printRef = spawn system "ServerPrinter" printActor
 
 
+// Worker Actor
+let workActor (mailbox : Actor<_>) = 
+    let rec messageLoop () = actor {
+
+        // Reading the message
+        let! msg = mailbox.Receive()
+        
+        for i in 1..500 do
+            // Random Fucntion
+            let randomGenerator = Random()
+
+            // Generating a random string
+            let str = "prateekgoel;" + String(Array.init (randomGenerator.Next(1,500)) (fun _ -> charSet.[randomGenerator.Next(charLength)]))
+
+            // Creating a hash out of it
+            let shahashbytearray : byte[] = HashByteArray str
+
+            // Checking for leading zeros
+            match msg with
+            | Input(userInput) ->
+                // let strfound = CheckLeadingZeros shahashbytearray userInput
+                let finalHash : string = HashByteToString shahashbytearray
+                let leadingString : string = String.replicate userInput "0"
+                let strfound = finalHash.StartsWith(leadingString)
+                if strfound then
+                    printRef <! Final(str, finalHash)
+                else
+                    mailbox.Self <! Input(userInput)
+                // mailbox.Sender() <! Done("Work Done")
+            | _ -> ()
+        
+        return! messageLoop()
+    }
+    messageLoop ()
 
 
+// The Boss is here
+let bossActor (mailbox : Actor<_>) = 
+    
+    // Checking Processor Cores in the System
+    let processorcount = int <| Environment.ProcessorCount
+
+    // Making many acting to spawn later
+    let totalworkers = processorcount * 2
+
+    // Creating a worker Pool
+    let workerPool = 
+        [1 .. totalworkers]
+        |> List.map(fun i -> spawnOpt system (sprintf "Worker_%d" i) workActor <| options)
+
+    let bossworkerenum = Array.ofList(workerPool)
+
+    // Creating a Coordinator to assign the work
+    let workerCoordinator = system.ActorOf(Props.Empty.WithRouter(Routing.RoundRobinGroup(bossworkerenum)))
+
+    // Tracking Worker's State
+    let state = ref 0
+
+    let rec messageLoop () = actor {
+        let! msg = mailbox.Receive()
+
+        match msg with
+        | Input(userInput) ->
+            for i in 1 .. totalworkers do
+                workerCoordinator <! Input(userInput)
+        | Done(workerState) ->
+            state := !state + 1
+            if !state = totalworkers then
+                mailbox.Context.System.Terminate() |> ignore
+        | _ -> 
+
+        return! messageLoop()
+    }
+    messageLoop()
+
+
+// Spawning the Actor System
+let boss = spawn system "Boss" bossActor
 
 // Taking user input from Command Line
 let userInput = System.Int32.Parse(Environment.GetCommandLineArgs().[2])
@@ -116,6 +193,9 @@ let sendUserInput (mailbox:Actor<_>) =
     }
     loop ()
 let serveInputRef = spawn system "inputserver" sendUserInput
+
+// Running the boss
+boss <! Input(userInput)
 
 
 // Wait until all the actors has finished processing
