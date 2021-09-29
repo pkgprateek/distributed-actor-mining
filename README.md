@@ -5,7 +5,7 @@
 <b>Semester</b>: Fall 2021 <br>
 <b>Instructor</b>: Dr. Alin Dobra <br>
 <b>Team</b>: 
-* Prateek Kumar Goel ([Github]())
+* Prateek Kumar Goel ([Github](https://github.com/pkgprateek))
 * Malvika Ranjitsinh Jadhav ([Github]())
 
 
@@ -28,8 +28,8 @@ Print, on independent entry lines, the input string, and the correspondingSHA256
 ```console
 foo@bar~$ dotnet fsi main.fsx 2
 ```
-```console
-foo@bar~$ prateekgoel;kjsdfk11&emsp;00402337f95d018438aad6c7dd75ad6e9239d6060444a7a6b26299b261aa9a8b
+```
+foo@bar~$ prateekgoel;kjsdfk11 00402337f95d018438aad6c7dd75ad6e9239d6060444a7a6b26299b261aa9a8b
 ```
 indicates that the coin with 1 leading 0 is adobra;kjsdfk11and it is prefixed by the gatorlink ID adobra.
 
@@ -46,3 +46,5 @@ will start a  worker that contacts the F# server hosted at  10.22.13.155  and pa
 
 ## Actor modeling
 In this project, you have to use exclusively the AKKA actor library in F# (projects that do not use multiple actors or use any other form of parallelism will receive no credit).  A model similar to the one indicated in class for the problem of adding up a lot of numbers can be used here,  in particular, define worker actors that are given a range of problems to solve and boss that keeps track of all the problems and perform the job assignment.
+
+<br>
