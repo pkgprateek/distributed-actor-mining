@@ -28,7 +28,7 @@ Print, on independent entry lines, the input string, and the correspondingSHA256
 ```console
 foo@bar~$ dotnet fsi main.fsx 2
 ```
-```
+```console
 foo@bar~$ prateekgoel;kjsdfk11 00402337f95d018438aad6c7dd75ad6e9239d6060444a7a6b26299b261aa9a8b
 ```
 indicates that the coin with 1 leading 0 is adobra;kjsdfk11and it is prefixed by the gatorlink ID adobra.
