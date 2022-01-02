@@ -6,7 +6,7 @@
 <b>Instructor</b>: Dr. Alin Dobra <br>
 <b>Team</b>: 
 * Prateek Kumar Goel ([Github](https://github.com/pkgprateek))
-* Malvika Ranjitsinh Jadhav ([Github]())
+* Malvika Ranjitsinh Jadhav ([Github](https://github.com/malvikajadhav))
 
 
 ## Problem definition
