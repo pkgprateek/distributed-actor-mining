@@ -49,14 +49,14 @@ In this project, you have to use exclusively the AKKA actor library in F# (proje
 
 <br>
 
-<b>Model Implementation: </b>
+## Model Implementation: 
 This is a remote actor model which involves two participating systems. 
 Server: 
 - It accepts user input, which is number of leading zeros for the bitcoin we want to mine.
 - Listens to any workers that message the server when available for work
 
 
-<b>Work unit:</b>
+## Work unit:
 In a single request from the boss actor our each worker actor works on  a set of 5 tasks. Considering this set of tasks as a work unit we have found the following values for CPU time to Real time ratio :
 
 | Number of work units | CPU Time (ms) | Real Time (ms) |  Ratio |
@@ -69,13 +69,13 @@ In a single request from the boss actor our each worker actor works on  a set of
 
 Thus our system had its optimum performance with 10000 work units.
 
-<b>Running time : </b><br>
+## Running time : 
 To find the first bitcoin with 4 leading zeros -<br>
 CPU Time: 1656ms<br>
 Real Time: 493ms<br>
 Ratio: 3.36 <br>
 
-<b> CPU TIME and Utilization:</b>
+## CPU TIME and Utilization:
 We have calculated the values for the following number of workers when number of work units assigned was 500:
 | Number of workers | CPU Time (ms) | Real Time (ms) |  Ratio |
 |-------------------|---------------|----------------|--------|
