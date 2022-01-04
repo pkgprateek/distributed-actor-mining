@@ -48,3 +48,39 @@ will start a  worker that contacts the F# server hosted at  10.22.13.155  and pa
 In this project, you have to use exclusively the AKKA actor library in F# (projects that do not use multiple actors or use any other form of parallelism will receive no credit).  A model similar to the one indicated in class for the problem of adding up a lot of numbers can be used here,  in particular, define worker actors that are given a range of problems to solve and boss that keeps track of all the problems and perform the job assignment.
 
 <br>
+
+<b>Model Implementation: </b>
+This is a remote actor model which involves two participating systems. 
+Server: 
+- It accepts user input, which is number of leading zeros for the bitcoin we want to mine.
+- Listens to any workers that message the server when available for work
+
+
+<b>Work unit:</b>
+In a single request from the boss actor our each worker actor works on  a set of 5 tasks. Considering this set of tasks as a work unit we have found the following values for CPU time to Real time ratio :
+
+| Number of work units | CPU Time (ms) | Real Time (ms) |  Ratio |
+|----------------------|---------------|----------------|--------|
+|          100         | 1656          | 493            | 3.36   |
+|          500         | 5843          | 1059           | 5.52   |
+|         10000        | 23406         | 2791           | 8.39   |
+|        100000        | 30703         | 3768           | 8.14   |
+|       1000000        | 34484         | 4278           | 8.06   |
+
+Thus our system had its optimum performance with 10000 work units.
+
+<b>Running time : </b><br>
+To find the first bitcoin with 4 leading zeros -<br>
+CPU Time: 1656ms<br>
+Real Time: 493ms<br>
+Ratio: 3.36 <br>
+
+<b> CPU TIME and Utilization:</b>
+We have calculated the values for the following number of workers when number of work units assigned was 500:
+| Number of workers | CPU Time (ms) | Real Time (ms) |  Ratio |
+|-------------------|---------------|----------------|--------|
+|         12        | 1656          | 1059           | 5.52   |
+|         24        | 19250         | 2769           | 6.95   |
+|         120       | 44015         | 6958           | 6.325  |
+|         600       | 187078        | 30644          | 6.12   |
+
